@@ -17,7 +17,7 @@ from pathlib import Path
 
 
 APP_NAME = "CampusCrawler"
-USER_AGENT = "CampusCrawler/0.1 (+local public-information research tool)"
+USER_AGENT = "CampusCrawler/0.2 (+local public-information research tool)"
 ASSET_EXTENSIONS = {
     ".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".ico",
     ".zip", ".rar", ".7z", ".pdf", ".doc", ".docx", ".xls", ".xlsx",
@@ -292,7 +292,11 @@ def download_file(url: str, output_dir: Path) -> Path:
 
 
 def export_results(items: list[dict[str, object]], export_format: str) -> tuple[bytes, str, str]:
-    fields = ["title", "category", "date", "department", "url", "source_page", "file_type", "score", "reason"]
+    fields = [
+        "school", "province", "query_year", "year", "material_label", "title", "category",
+        "date", "source_authority", "department", "url", "source_page",
+        "file_type", "score", "reason",
+    ]
     if export_format == "json":
         return json.dumps(items, ensure_ascii=False, indent=2).encode("utf-8"), "application/json", "json"
     if export_format == "md":
@@ -300,8 +304,13 @@ def export_results(items: list[dict[str, object]], export_format: str) -> tuple[
         for item in items:
             lines.extend([
                 f"## {item.get('title', '未命名')}",
+                f"- 学校：{item.get('school', '')}",
+                f"- 省份：{item.get('province', '')}",
+                f"- 年份：{item.get('year', '')}",
+                f"- 资料类型：{item.get('material_label', '')}",
                 f"- 类型：{item.get('category', '')}",
                 f"- 日期：{item.get('date', '')}",
+                f"- 来源机构：{item.get('source_authority', '')}",
                 f"- 链接：{item.get('url', '')}",
                 f"- 来源：{item.get('source_page', '')}",
                 "",

@@ -12,12 +12,13 @@
         <h1>CampusCrawler</h1>
         <p>公开校园信息采集助手</p>
       </div>
-      <span class="version">v0.1.0</span>
+      <span class="version">v0.2.0</span>
     </header>
 
     <main>
       <aside class="sidebar" aria-label="采集类型">
-        <button class="mode active" data-mode="logo"><span>标</span><b>学校标识</b><small>Logo、校徽、素材包</small></button>
+        <button class="mode active" data-mode="anhui_admission"><span>皖</span><b>安徽招考</b><small>章程、计划、分数资料</small></button>
+        <button class="mode" data-mode="logo"><span>标</span><b>学校标识</b><small>Logo、校徽、素材包</small></button>
         <button class="mode" data-mode="notice"><span>通</span><b>校园通知</b><small>通知、公告、公示</small></button>
         <button class="mode" data-mode="admission"><span>招</span><b>招生信息</b><small>简章、复试、调剂</small></button>
         <div class="boundary">
@@ -29,12 +30,26 @@
       <section class="workspace">
         <div class="toolbar">
           <form id="collectForm">
-            <label for="siteUrl">学校官网或栏目网址</label>
-            <div class="url-row">
-              <input id="siteUrl" type="url" value="https://www.ahau.edu.cn/" required />
-              <label class="pages">页面数<input id="maxPages" type="number" min="1" max="30" value="12" /></label>
-              <button type="submit" id="collectButton">开始采集</button>
+            <div class="admission-fields" id="admissionFields">
+              <label>目标院校
+                <input id="schoolName" type="text" value="安徽农业大学" placeholder="例如：安徽农业大学" />
+              </label>
+              <label>查询年份
+                <select id="targetYear">
+                  <option value="2026">2026</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                </select>
+              </label>
             </div>
+            <label for="siteUrl" id="siteUrlLabel">学校官方本科招生网（建议填写）</label>
+            <div class="url-row">
+              <input id="siteUrl" type="url" value="https://zsb.ahau.edu.cn/" placeholder="例如：https://zsb.example.edu.cn/" />
+              <label class="pages">页面数<input id="maxPages" type="number" min="1" max="30" value="12" /></label>
+              <button type="submit" id="collectButton">查询资料</button>
+            </div>
+            <p class="form-note" id="formNote">面向安徽考生，查询院校在安徽的公开招生资料；不提供录取概率预测。</p>
           </form>
         </div>
 
@@ -48,8 +63,8 @@
 
         <div class="result-toolbar">
           <div>
-            <h2 id="resultTitle">学校标识结果</h2>
-            <p id="resultHint">输入学校官网后开始采集。</p>
+            <h2 id="resultTitle">安徽招生资料</h2>
+            <p id="resultHint">输入目标院校和官方招生网，查询公开招生资料。</p>
           </div>
           <div class="export-actions">
             <select id="exportFormat" aria-label="导出格式">

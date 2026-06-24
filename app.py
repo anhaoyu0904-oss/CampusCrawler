@@ -9,6 +9,7 @@ from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from anhui_admission import collect_anhui_admission
 from campus_crawler import collect, download_file, export_results
 
 
@@ -50,11 +51,20 @@ class AppHandler(SimpleHTTPRequestHandler):
     def handle_collect(self) -> None:
         try:
             payload = self.read_json()
-            result = collect(
-                str(payload.get("url", "")),
-                str(payload.get("mode", "logo")),
-                int(payload.get("max_pages", 12)),
-            )
+            mode = str(payload.get("mode", "logo"))
+            if mode == "anhui_admission":
+                result = collect_anhui_admission(
+                    str(payload.get("school_name", "")),
+                    str(payload.get("url", "")),
+                    int(payload.get("year", datetime.now().year)),
+                    int(payload.get("max_pages", 12)),
+                )
+            else:
+                result = collect(
+                    str(payload.get("url", "")),
+                    mode,
+                    int(payload.get("max_pages", 12)),
+                )
             self.send_json(result)
         except Exception as exc:
             self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)

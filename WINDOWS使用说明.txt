@@ -1,12 +1,13 @@
-CampusCrawler v0.1.0
+CampusCrawler v0.2.0
 
 使用方法：
 
 1. 双击 CampusCrawler.exe。
 2. 保持弹出的命令行窗口开启。
 3. 浏览器会自动打开 CampusCrawler。
-4. 选择采集类型，输入学校官网或栏目网址，然后点击“开始采集”。
-5. 下载和导出的文件保存在 CampusCrawler.exe 旁边的 downloads 文件夹。
+4. 安徽招考模式下，输入院校名称、年份和学校官方本科招生网，然后点击“查询资料”。
+5. 其他模式下，选择采集类型并输入学校官网或栏目网址。
+6. 下载和导出的文件保存在 CampusCrawler.exe 旁边的 downloads 文件夹。
 
 如果浏览器没有自动打开，请手动访问：
 
