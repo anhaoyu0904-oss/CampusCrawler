@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CampusCrawler</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>CampusCrawler</h1>
+        <p>公开校园信息采集助手</p>
+      </div>
+      <span class="version">v0.1.0</span>
+    </header>
+
+    <main>
+      <aside class="sidebar" aria-label="采集类型">
+        <button class="mode active" data-mode="logo"><span>标</span><b>学校标识</b><small>Logo、校徽、素材包</small></button>
+        <button class="mode" data-mode="notice"><span>通</span><b>校园通知</b><small>通知、公告、公示</small></button>
+        <button class="mode" data-mode="admission"><span>招</span><b>招生信息</b><small>简章、复试、调剂</small></button>
+        <div class="boundary">
+          <strong>合规边界</strong>
+          <p>仅采集公开网页。遵守 robots.txt，不绕过登录、验证码或访问限制。</p>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <div class="toolbar">
+          <form id="collectForm">
+            <label for="siteUrl">学校官网或栏目网址</label>
+            <div class="url-row">
+              <input id="siteUrl" type="url" value="https://www.ahau.edu.cn/" required />
+              <label class="pages">页面数<input id="maxPages" type="number" min="1" max="30" value="12" /></label>
+              <button type="submit" id="collectButton">开始采集</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="metrics">
+          <div><strong id="resultCount">0</strong><span>采集结果</span></div>
+          <div><strong id="pageCount">0</strong><span>访问页面</span></div>
+          <div><strong id="skipCount">0</strong><span>合规跳过</span></div>
+          <div><strong id="errorCount">0</strong><span>访问失败</span></div>
+          <span class="status" id="status">等待任务</span>
+        </div>
+
+        <div class="result-toolbar">
+          <div>
+            <h2 id="resultTitle">学校标识结果</h2>
+            <p id="resultHint">输入学校官网后开始采集。</p>
+          </div>
+          <div class="export-actions">
+            <select id="exportFormat" aria-label="导出格式">
+              <option value="csv">CSV</option>
+              <option value="json">JSON</option>
+              <option value="md">Markdown</option>
+            </select>
+            <button type="button" id="exportButton" disabled>导出结果</button>
+          </div>
+        </div>
+
+        <section id="results" class="results">
+          <div class="empty">尚未开始采集</div>
+        </section>
+      </section>
+    </main>
+
+    <template id="resultTemplate">
+      <article class="result-item">
+        <div class="preview"></div>
+        <div class="result-body">
+          <div class="result-heading"><h3></h3><span class="score"></span></div>
+          <div class="meta"></div>
+          <p class="reason"></p>
+          <a class="source" target="_blank" rel="noreferrer"></a>
+        </div>
+        <div class="item-actions">
+          <a class="open" target="_blank" rel="noreferrer">打开来源</a>
+          <button type="button" class="download">下载文件</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
